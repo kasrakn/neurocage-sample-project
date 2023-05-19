@@ -23,5 +23,20 @@ services:
     ports:
       - 5000:5000
 
+  web-app:
+    build:
+      context: ./interviewProject
+    environment:
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DJANGO_DEBUG=${DJANGO_DEBUG}
+      - DJANGO_ALLOWED_HOST=${DJANGO_ALLOWED_HOST}
+    volumes:
+      - ./interviewProject:/code
+    ports:
+      - 8000:8000
+    depends_on:
+      - database
+      - sensor-mock
+
 volumes:
   pgdata:

@@ -56,7 +56,7 @@ jobs:
 
       - name: Run Migrations # run migrations to create table in side car db container
         run: |
-          python manage.py migrate
+          python interviewProject/manage.py migrate
 
       - name: Run Test # running tests
         env:

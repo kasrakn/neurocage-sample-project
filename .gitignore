@@ -1,1 +1,8 @@
-venv
+# Virtual Environments
+*venv 
+
+# enviroment files
+*.env
+
+# cache files
+*pycache

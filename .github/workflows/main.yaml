@@ -14,7 +14,11 @@ on:
       - develop
       - main
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
+  
 # three job definition
 jobs:
   health-check-job: # health check job for testing and code formatting check

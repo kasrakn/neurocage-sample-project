@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  database:
+    image: timescale/timescaledb:latest-pg15
+    ports:
+      - 5432:${DATABASE_PORT}
+    environment:
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USER}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+
+  sensor-mock:
+    build:
+      context: ./sensor-mock
+    environment:
+      - FLASK_APP=main.py
+    volumes:
+      - ./sensor-mock:/app
+    ports:
+      - 5000:5000
+
+volumes:
+  pgdata:

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Sign Up{% endblock %}
+{% block content %}
+
+{% load static %}
+<br><br>
+
+<h2 class="text-primary">Sign Up</h2>
+<br>
+{% for message in messages %}
+<div class="alert {{ message.tags }} text-end" role="alert">
+    <button type="button" class="btn-close close float-start" data-bs-dismiss="alert" aria-label="Close"></button>
+    {{ message }}
+</div>
+{% endfor %}
+
+
+<div class="form-group">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary">Sign Up</button>
+    </form>
+</div>
+
+{% endblock %}

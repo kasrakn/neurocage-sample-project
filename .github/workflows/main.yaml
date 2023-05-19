@@ -18,7 +18,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
-  
+
 # three job definition
 jobs:
   health-check-job: # health check job for testing and code formatting check
@@ -56,7 +56,7 @@ jobs:
         run: python --version
 
       - name: Install requirements # install application requirements
-        run: pip install -r requirements.txt
+        run: pip install -r interviewProject/requirements.txt
 
       - name: Run Migrations # run migrations to create table in side car db container
         run: |
@@ -92,7 +92,6 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          # password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -103,7 +102,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
-          context: .
+          context: ./interviewProject
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

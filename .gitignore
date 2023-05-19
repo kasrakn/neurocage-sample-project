@@ -5,4 +5,4 @@
 *.env
 
 # cache files
-*pycache
+*pycache*

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}New Cage{% endblock %}
+{% block content %}
+
+{% load static %}
+
+{% if user.is_authenticated %}
+    <br>
+
+    <h2 class="text-primary">Edit Cage {{ cage.label }}</h2>
+    <br>
+    <form method="POST" class="needs-validation" novalidate>
+        {% csrf_token %}
+
+        {% include "includes/alert-message.html" %}
+
+        <div class="row my-3">
+            <div class="col-md-6">
+                <div class="form-outline">
+                    <label for="{{ form.year.id_for_label }}" class="form-label">Cage Label</label>
+                    {{ form.label }}
+                </div>
+            </div>
+        </div>
+        <div class="d-flex" style="padding-top: 10px;">
+            <button type="submit" class="btn btn-primary">Edit</button>
+        </div>
+    </form>
+{% else %}
+    {% include 'includes/not-authenticated.html' %}
+{% endif %}
+
+{% endblock %}

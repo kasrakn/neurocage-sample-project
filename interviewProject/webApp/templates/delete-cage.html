@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Delete cage{% endblock %}
+{% block content %}
+
+{% if user.is_authenticated %}
+    <br>
+    <h2 class="text-primary"> Delete cage </h2>
+    <br>
+
+    <div class="form-group">
+        <form method="POST">
+            {% csrf_token %}
+            <strong>Are you sure you want to delete cage {{ cage.label }}?</strong>
+            <br><br>
+            <button class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+{% else %}
+    {% include 'includes/not-authenticated.html' %}
+{% endif %}
+
+
+{% endblock %}

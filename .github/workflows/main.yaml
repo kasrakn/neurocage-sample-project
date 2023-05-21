@@ -66,9 +66,9 @@ jobs:
         env:
           DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
           DEBUG: "0"
-          DATABASE_NAME: ${{ secrets.NAME }}
-          DATABASE_USER: ${{ secrets.USER }}
-          DATABASE_PASSWORD: ${{ secrets.PASSWORD }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+          DATABASE_USER: ${{ secrets.DATABASE_USER }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           DATABASE_HOST: localhost
           DATABASE_PORT: 5432
         run: |

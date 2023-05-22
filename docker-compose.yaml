@@ -26,17 +26,49 @@ services:
   web-app:
     build:
       context: ./interviewProject
+    command: gunicorn --bind 0.0.0.0:8000 interviewProject.wsgi
     environment:
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
       - DJANGO_DEBUG=${DJANGO_DEBUG}
       - DJANGO_ALLOWED_HOST=${DJANGO_ALLOWED_HOST}
     volumes:
-      - ./interviewProject:/code
+      - ./interviewProject:/app
     ports:
       - 8000:8000
     depends_on:
       - database
       - sensor-mock
+      - redis
+
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+
+  celery:
+    build: ./interviewProject
+    command: celery -A interviewProject worker -l info
+    volumes:
+      - ./interviewProject:/app/
+    environment:
+      - DEBUG=1
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DJANGO_DEBUG=${DJANGO_DEBUG}
+      - DJANGO_ALLOWED_HOST=${DJANGO_ALLOWED_HOST}
+    depends_on:
+      - redis
+  celery-beat:
+    build: ./interviewProject
+    command: celery -A interviewProject beat -l info
+    volumes:
+      - ./interviewProject:/app/
+    environment:
+      - DEBUG=1
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DJANGO_DEBUG=${DJANGO_DEBUG}
+      - DJANGO_ALLOWED_HOST=${DJANGO_ALLOWED_HOST}
+    depends_on:
+      - redis
 
 volumes:
   pgdata:

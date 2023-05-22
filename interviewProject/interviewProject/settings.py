@@ -172,11 +172,13 @@ MESSAGE_TAGS = {
 LOGIN_REDIRECT_URL = 'cage-list'
 LOGOUT_REDIRECT_URL = 'login'
 
+# Redis configs
+REDIS_HOST = os.environ.get("REDIS_HOST") # redis host
 
 # Celery settings
 
-CELERY_BROKER_URL = "redis://localhost:6379"
-CELERY_RESULT_BACKEND = "redis://localhost:6379"
+CELERY_BROKER_URL = f"redis://{REDIS_HOST}:6379"
+CELERY_RESULT_BACKEND = f"redis://{REDIS_HOST}:6379"
 
 from celery.schedules import timedelta
 

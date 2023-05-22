@@ -3,125 +3,110 @@
 {% block content %}
 
 
-{% if user.is_authenticated %}
 <br>
 <h2 class="text-primary"> {{cage}}</h2>
-    <br>
+<br>
 
-    {% include "includes/alert-message.html" %}
-        
-    <div class="container px-4">
-        <div class="row">
-            <div class="col-4">
-                <strong class="text-dark">ID: </strong>
-                <span class="text-secondary">{{ cage.id }}</span>
-            </div>
-            <div class="col-6">
-                <strong class="text-dark">latest health status: </strong>                
-                {% if cage.latest_health_status == '1' %}
-                    <span class="text-danger">Bad</span>
-                {% elif cage.latest_health_status == '2' %}
-                    <span class="text-warning">Ok</span>
-                {% elif cage.latest_health_status == '3' %}
-                    <span class="text-success">Perfect</span>
-                {% else %}
-                    <span class="text-muted">No data</span>                
-                {% endif %}
-            </div>
+{% include "includes/alert-message.html" %}
+    
+<div class="container px-4">
+    <div class="row">
+        <div class="col-4">
+            <strong class="text-dark">ID: </strong>
+            <span class="text-secondary">{{ cage.id }}</span>
         </div>
-        <br><br>
-        {% if today_sensor_data|length == 0 %}
-            <div class="d-flex">
-                <i class="fa-sharp fa-solid fa-circle-exclamation text-warning" style="margin-right: 5px; margin-top: 4px;"></i>
-                <p class="text-muted">No data has been recorded today</p>
-            </div>
-        {% else %}
-            <div>
-                <h2 class="text-secondary">Today's health data recorded</h2>
-                <br>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Time</th>
-                        </tr>
-                    </thead>    
-                    <tbody>
-                        {% for data in today_health_data %}
-                            <tr>
-                                <th scope="row">{{ forloop.counter }}</th>
-                                <td>
-                                    {% if data.health_status == '1' %}
-                                    <span class="text-danger">Bad</span>
-                                    {% elif data.health_status == '2' %}
-                                        <span class="text-warning">Ok</span>
-                                    {% elif data.health_status == '3' %}
-                                        <span class="text-success">Perfect</span>
-                                    {% else %}
-                                        <span class="text-muted">No data</span>                
-                                    {% endif %}
-                                </td>
-                                <td>{{ data.timestamp|time:"H:i" }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-
-                <br><br>
-
-                <h2 class="text-secondary">Today's sensor functionality</h2>
-                <br>
-
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Time</th>
-                            <th scope="col">successful</th>
-                            <th scope="col">Status</th>
-                        </tr>
-                    </thead>    
-                    <tbody>
-                        {% for data in today_sensor_data %}
-                            <tr>
-                                <th scope="row">{{ forloop.counter }}</th>
-                                <td>{{ data.timestamp|time:"H:i" }}</td>
-                                {% if data.is_successful %}
-                                    <td><i class="fa-solid fa-circle-check" style="color: #388e3c;"></i></td>
-                                {% else %}
-                                    <td><i class="fa-sharp fa-solid fa-circle-xmark" style="color: #c62828;"></i></td>
-                                {% endif %}
-                                <td>
-                                    {% if data.health_status == '1' %}
-                                    <span class="text-danger">Bad</span>
-                                    {% elif data.health_status == '2' %}
-                                        <span class="text-warning">Ok</span>
-                                    {% elif data.health_status == '3' %}
-                                        <span class="text-success">Perfect</span>
-                                    {% else %}
-                                        <span class="text-muted">-</span>                
-                                    {% endif %}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% endif %}
-{% else %}
-<svg xmlns="http://www.w3.org/2000/svg" style="display: none;" >
-    <symbol id="exclamation-triangle-fill" viewBox="0 0 16 16">
-        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-    </symbol>
-</svg>  
-
-<div class="alert alert-danger d-flex align-items-center" role="alert">
-    <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-    <div>
-        Authentication error. Please login.
+        <div class="col-6">
+            <strong class="text-dark">latest health status: </strong>                
+            {% if cage.latest_health_status == '1' %}
+                <span class="text-danger">Bad</span>
+            {% elif cage.latest_health_status == '2' %}
+                <span class="text-warning">Ok</span>
+            {% elif cage.latest_health_status == '3' %}
+                <span class="text-success">Perfect</span>
+            {% else %}
+                <span class="text-muted">No data</span>                
+            {% endif %}
+        </div>
     </div>
-</div>
-{% endif %}
-            
+    <br><br>
+    {% if today_sensor_data|length == 0 %}
+        <div class="d-flex">
+            <i class="fa-sharp fa-solid fa-circle-exclamation text-warning" style="margin-right: 5px; margin-top: 4px;"></i>
+            <p class="text-muted">No data has been recorded today</p>
+        </div>
+    {% else %}
+        <div>
+            <h2 class="text-secondary">Today's health data recorded</h2>
+            <br>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Time</th>
+                    </tr>
+                </thead>    
+                <tbody>
+                    {% for data in today_health_data %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>
+                                {% if data.health_status == '1' %}
+                                <span class="text-danger">Bad</span>
+                                {% elif data.health_status == '2' %}
+                                    <span class="text-warning">Ok</span>
+                                {% elif data.health_status == '3' %}
+                                    <span class="text-success">Perfect</span>
+                                {% else %}
+                                    <span class="text-muted">No data</span>                
+                                {% endif %}
+                            </td>
+                            <td>{{ data.timestamp|time:"H:i" }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <br><br>
+
+            <h2 class="text-secondary">Today's sensor functionality</h2>
+            <br>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">successful</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>    
+                <tbody>
+                    {% for data in today_sensor_data %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ data.timestamp|time:"H:i" }}</td>
+                            {% if data.is_successful %}
+                                <td><i class="fa-solid fa-circle-check" style="color: #388e3c;"></i></td>
+                            {% else %}
+                                <td><i class="fa-sharp fa-solid fa-circle-xmark" style="color: #c62828;"></i></td>
+                            {% endif %}
+                            <td>
+                                {% if data.health_status == '1' %}
+                                <span class="text-danger">Bad</span>
+                                {% elif data.health_status == '2' %}
+                                    <span class="text-warning">Ok</span>
+                                {% elif data.health_status == '3' %}
+                                    <span class="text-success">Perfect</span>
+                                {% else %}
+                                    <span class="text-muted">-</span>                
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+        
 {% endblock %}

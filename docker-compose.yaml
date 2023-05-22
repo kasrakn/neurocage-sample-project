@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  database:
+  timescaledb:
     image: timescale/timescaledb:latest-pg15
     ports:
       - 5432:${DATABASE_PORT}
@@ -31,12 +31,20 @@ services:
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
       - DJANGO_DEBUG=${DJANGO_DEBUG}
       - DJANGO_ALLOWED_HOST=${DJANGO_ALLOWED_HOST}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_HOST=timescaledb
+      - REDIS_HOST=redis
+      - SENSOR_HOST=sensor-mock
+
     volumes:
       - ./interviewProject:/app
     ports:
       - 8000:8000
     depends_on:
-      - database
+      - timescaledb
       - sensor-mock
       - redis
 
@@ -55,8 +63,17 @@ services:
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
       - DJANGO_DEBUG=${DJANGO_DEBUG}
       - DJANGO_ALLOWED_HOST=${DJANGO_ALLOWED_HOST}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_HOST=timescaledb
+      - REDIS_HOST=redis
+      - SENSOR_HOST=sensor-mock
     depends_on:
       - redis
+      - sensor-mock
+
   celery-beat:
     build: ./interviewProject
     command: celery -A interviewProject beat -l info
@@ -67,8 +84,16 @@ services:
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
       - DJANGO_DEBUG=${DJANGO_DEBUG}
       - DJANGO_ALLOWED_HOST=${DJANGO_ALLOWED_HOST}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_HOST=timescaledb
+      - REDIS_HOST=redis
+      - SENSOR_HOST=sensor-mock
     depends_on:
       - redis
+      - sensor-mock
 
 volumes:
   pgdata:

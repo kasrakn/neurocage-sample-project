@@ -2,17 +2,17 @@ from celery import shared_task, Celery
 from celery.schedules import crontab, timedelta
 from celery.utils.log import get_task_logger
 from webApp.models import Cage, SensorData
-
+import os
 import requests
 
 
-logger = get_task_logger(__name__)
+
 
 @shared_task
 def call_api_for_cage():
     for cage in Cage.objects.all():
         response = requests.get(
-            url='http://127.0.0.1:5000/data/{}'.format(cage.id)
+            url='http://{}:5000/data/{}'.format(os.getenv('SENSOR_HOST'), cage.id)
         )
 
         if response.status_code == 200:

@@ -3,8 +3,8 @@ version: '3.8'
 services:
   timescaledb:
     image: timescale/timescaledb:latest-pg15
-    ports:
-      - 5432:${DATABASE_PORT}
+    # ports:
+    #   - 5432:${DATABASE_PORT}
     environment:
       - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
       - POSTGRES_DB=${DATABASE_NAME}
@@ -20,8 +20,8 @@ services:
       - FLASK_APP=main.py
     volumes:
       - ./sensor-mock:/app
-    ports:
-      - 5000:5000
+    # ports:
+    #   - 5000:5000
 
   web-app:
     build:
@@ -50,8 +50,8 @@ services:
 
   redis:
     image: redis:latest
-    ports:
-      - 6379:6379
+    # ports:
+    #   - 6379:6379
 
   celery:
     build: ./interviewProject

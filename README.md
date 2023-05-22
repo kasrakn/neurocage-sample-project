@@ -6,7 +6,7 @@ This project contains a web application developed with the Django framework that
 ## **Project Structure**
 This project includes two main separate sections. The web application and the sensor API, which had been developed before, and now it is used as an API service in the system.
 
-The Django application is responsible for creating frontend views and handling requests receiving the system. It consists of a ListView for displaying the cages that created by user and DetailView for details about sensor of each cage and the related tables. In general and in the case of having sensor data in the database, it has two main tables. The first one is for all the correct received data and the other one is for listing all the requests for the cage and their successful and health statuses. The following images display these two pages.
+The Django application is responsible for creating frontend views and handling requests receiving the system. It consists of a CreateView for creating cages and a ListView for displaying the cages that created by user and DetailView for details about sensor of each cage and the related tables. In general and in the case of having sensor data in the database, it has two main tables. The first one is for all the correct received data and the other one is for listing all the requests for the cage and their successful and health statuses. The following images display these two pages.
    
    <img src="images/cage-list.png">
    <img src="images/cage-detail.png">

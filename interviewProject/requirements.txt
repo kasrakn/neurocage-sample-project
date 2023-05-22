@@ -6,3 +6,5 @@ sqlparse==0.4.4
 python-dotenv==1.0.0
 gunicorn
 django-timescaledb
+APScheduler==3.10.1
+requests

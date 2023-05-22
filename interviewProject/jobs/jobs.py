@@ -12,11 +12,20 @@ def get_sensor_data():
         
         if response.status_code == 200:
             health_status = response.json()['status']
-        else:
+            SensorData.objects.create(
+                cage=cage,
+                health_status=health_status,
+            )
+        elif response.status_code == 503:
             health_status = None
-        SensorData.objects.create(
-            cage=cage,
-            health_status=health_status,
-        )
+            SensorData.objects.create(
+                cage=cage,
+                health_status=health_status,
+            )
+        else:
+            pass
 
-        print(f"-- {cage.id} | status = {health_status}")
+        try:
+            print(f"-- {cage.id} | status = {health_status}")
+        except:
+            print(f"calling api for cage {cage.id} failed")

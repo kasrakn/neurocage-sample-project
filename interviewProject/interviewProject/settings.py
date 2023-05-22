@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 from django.contrib.messages import constants as messages
+from celery.schedules import crontab
 
 
 load_dotenv()
@@ -170,3 +171,19 @@ MESSAGE_TAGS = {
 
 LOGIN_REDIRECT_URL = 'cage-list'
 LOGOUT_REDIRECT_URL = 'login'
+
+
+# Celery settings
+
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
+
+from celery.schedules import timedelta
+
+CELERY_BEAT_SCHEDULE = {
+    "call_api_for_cage": {
+        "task": "webApp.tasks.call_api_for_cage",
+        "schedule": crontab(minute="*/1"),
+        # 'schedule': 10
+    },
+}

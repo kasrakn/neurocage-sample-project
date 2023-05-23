@@ -25,7 +25,11 @@ In this project, I have used TimeScaleDB, which is an extension of PostgresDB to
 In order to make sure that the web application runs smoothly and without any delays, developers must offload any time/resource-intensive task, which runs independently from the web application service. In particular, when the web server receives lots of requests from the users. In the case of running those tasks synchronously, our pages are prone to load so much slower. In order to tackle this problem, I have utilized Celery, which is a task queue and task scheduler, and Redis as a message broker. 
 This Django app needs to call the sensor mock API every 1 minute and stores the data in the database. In this case, a Celery worker, which runs on another server/container, takes the task and completes it, and then returns back the result to the Django app to save it. Between our Django app and the celery worker, there is a message broker responsible for delivering those tasks between the Django and celery workers. When the result of a task comes, the celery worker stores it in the Redis and Django reads it back and stores it in the database.
 
+<div style="background-color: white;">
+<br>
 <img src="images/architecture.png">
+<br>
+</div>
 
 The image above illustrates the process of delivering tasks to celery workers and getting back the results. It is worth mentioning that there is only one Redis server in our system. The capability of using Redis as a message broker and a database makes it stands out compare to other message brokers like RabitMQ.
 

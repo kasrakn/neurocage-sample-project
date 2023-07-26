@@ -1,4 +1,4 @@
-# My Neurocage interview project
+# Neurocage Sample project
 
 ## **Description**
 This project contains a web application developed with the Django framework that illustrates some of the functionalities of the systems in Neurocage in a very abstract picture. Let's dive into the technical details of it.
